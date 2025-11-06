@@ -31,18 +31,19 @@ import filter_icon from "./filter_icon.svg";
 import edit_icon from "./edit_icon.svg";
 import calendar_icon_colored from "./calendar_icon_colored.svg";
 import location_icon_colored from "./location_icon_colored.svg";
-import testimonial_image_1 from "./testimonial_image_1.png";
-import testimonial_image_2 from "./testimonial_image_2.png";
+import testimonial_image_1 from "./testimonial_image_1.jpeg";
+import testimonial_image_2 from "./testimonial_image_2.jpeg";
+import testimonial_image_3 from "./testimonial_image_3.jpeg";
 import main_car from "./main_car.png";
 import banner_car_image from "./banner_car_image.png";
 import user_profile from "./user_profile.png";
 import upload_icon from "./upload_icon.svg";
 import car_image1 from "./car_image1.png";
-import car_image2 from "./car_image2.png";
+import car_image2 from "./Toyota-Corolla.webp";
 import car_image3 from "./car_image3.png";
 import car_image4 from "./car_image4.png";
 
-export const cityList = ["New Mumbai", "Delhi", "Bengaluru", "Yavatmal"];
+export const cityList = ["New Mumbai", "Vashi Gaon", "Old Mumbai", "New Delhi"];
 
 export const assets = {
   logo,
@@ -80,6 +81,7 @@ export const assets = {
   filter_icon,
   testimonial_image_1,
   testimonial_image_2,
+  testimonial_image_3,
   main_car,
   banner_car_image,
   car_image1,
@@ -125,7 +127,7 @@ export const ownerMenuLinks = [
 
 export const dummyUserData = {
   _id: "6847f7cab3d8daecdb517095",
-  name: "GreatStack",
+  name: "Rohit Rude",
   email: "admin@example.com",
   role: "owner",
   image: user_profile,
@@ -142,9 +144,9 @@ export const dummyCarData = [
     category: "SUV",
     seating_capacity: 4,
     fuel_type: "Hybrid",
-    transmission: "Automatic",
+    transmission: "Semi-Automatic",
     pricePerDay: 300,
-    location: "New York",
+    location: "New Mumbai",
     description:
       "The BMW X5 is a mid-size luxury SUV produced by BMW. The X5 made its debut in 1999 as the first SUV ever produced by BMW.",
     isAvaliable: true,
@@ -162,7 +164,7 @@ export const dummyCarData = [
     fuel_type: "Diesel",
     transmission: "Manual",
     pricePerDay: 130,
-    location: "Chicago",
+    location: "Vashi Gaon",
     description:
       "The Toyota Corolla is a mid-size luxury sedan produced by Toyota. The Corolla made its debut in 2008 as the first sedan ever produced by Toyota.",
     isAvaliable: true,
@@ -171,7 +173,7 @@ export const dummyCarData = [
   {
     _id: "67ff6b9f8f1b3684286a2a68",
     owner: "67fe3467ed8a8fe17d0ba6e2",
-    brand: "Jeep ",
+    brand: "Jeep",
     model: "Wrangler",
     image: car_image3,
     year: 2023,
@@ -180,7 +182,7 @@ export const dummyCarData = [
     fuel_type: "Hybrid",
     transmission: "Automatic",
     pricePerDay: 200,
-    location: "Los Angeles",
+    location: "Old Mumbai",
     description:
       "The Jeep Wrangler is a mid-size luxury SUV produced by Jeep. The Wrangler made its debut in 2003 as the first SUV ever produced by Jeep.",
     isAvaliable: true,
@@ -196,9 +198,9 @@ export const dummyCarData = [
     category: "Sedan",
     seating_capacity: 2,
     fuel_type: "Diesel",
-    transmission: "Automatic",
+    transmission: "Semi-Automatic",
     pricePerDay: 209,
-    location: "Houston",
+    location: "New Delhi",
     description:
       "This is a mid-size luxury sedan produced by Toyota. The Corolla made its debut in 2008 as the first sedan ever produced by Toyota.",
     isAvaliable: true,
@@ -259,5 +261,5 @@ export const dummyDashboardData = {
   pendingBookings: 0,
   completedBookings: 2,
   recentBookings: [dummyMyBookingsData[0], dummyMyBookingsData[1]],
-  monthlyRevenue: 840,
+  monthlyRevenue: 570,
 };
