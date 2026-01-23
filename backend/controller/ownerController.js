@@ -183,3 +183,24 @@ export const updateUserImage = async(req, res) =>{
         res.json({success: false, message: error.message});
     }
 }
+
+// API to get all registered users
+export const getAllUsers = async (req, res) => {
+    try {
+        const { _id, role } = req.user;
+
+        // Check if user is owner/admin
+        if (role !== 'owner' && role !== 'admin') {
+            return res.json({ success: false, message: "Unauthorized Access" });
+        }
+
+        // Fetch all users except owner/admin passwords
+        const users = await User.find({}).select('-password').sort({ createdAt: -1 });
+
+        res.json({ success: true, users });
+
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
+    }
+}

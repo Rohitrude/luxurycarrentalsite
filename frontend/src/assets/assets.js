@@ -124,6 +124,12 @@ export const ownerMenuLinks = [
     icon: listIcon,
     coloredIcon: listIconColored,
   },
+  {
+    name: "All Users",
+    path: "/owner/all-users",
+    icon: users_icon,
+    coloredIcon: users_icon,
+  },
 ];
 
 export const dummyUserData = {
