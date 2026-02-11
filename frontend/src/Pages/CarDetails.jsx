@@ -33,7 +33,22 @@ const CarDetails = () => {
       name: "Rohit's website",
       description: "Car booking payment",
       order_id: Orderdata.id,
-      callback_url: 'http://localhost:5173/my-bookings',
+      handler: function (response) {
+        // Save booking info + payment response for next page
+        localStorage.setItem(
+          "pendingBooking",
+          JSON.stringify({
+            bookingData: {
+              car: id,
+              pickupDate,
+              returnDate
+            },
+            paymentData: response
+          })
+        );
+
+        navigate("/payment-success");
+      },
       prefill: {
         name: user.name,
         email: user.email,
@@ -153,7 +168,7 @@ const CarDetails = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.6 }}
 
-          onSubmit={handleSubmit} className="shadow-lg h-max sticky top-18 rounded-xl p-6 space-y-6 text-gray">
+          onSubmit={(e) => e.preventDefault()} className="shadow-lg h-max sticky top-18 rounded-xl p-6 space-y-6 text-gray">
 
           <p className=" flex items-center justify-between text-gray-800 font-semibold">
             {currency} {(car.pricePerDay)}<span className="text-base text-gray-400 font-normal">
@@ -174,9 +189,9 @@ const CarDetails = () => {
           </div>
 
           <button className="bg-primary py-3 rounded-xl hover:bg-primary-dull 
-                    transition-all font-medium text-white cursor-pointer w-full" onClick={() => {
-              paymentHandler(car.pricePerDay)
-            }}>Book Now</button>
+                    transition-all font-medium text-white cursor-pointer w-full" 
+              onClick={() => paymentHandler(car.pricePerDay)
+            }>Book Now</button>
           <p className="text-sm text-gray-500 text-center">No credit car required to revenue</p>
         </motion.form>
       </div>

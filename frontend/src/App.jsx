@@ -15,6 +15,7 @@ import AllUsers from "./Pages/Owner/AllUsers";
 import Login from "./components/Login";
 import { Toaster } from 'react-hot-toast';
 import { useAppContext } from "./context/AppContext";
+import PaymentSuccess from "./Pages/PaymentSuccess";
 
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="manage-bookings" element={<ManageBookings />} />
             <Route path="all-users" element={<AllUsers />} />
           </Route>
+          <Route path="/payment-success" element={<PaymentSuccess />} />
         </Routes>
 
         {!isOwnerPath && <Footer />}
