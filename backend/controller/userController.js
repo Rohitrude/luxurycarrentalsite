@@ -50,10 +50,30 @@ export const loginUser = async (req, res) => {
         }
 
         const token = generateToken(user._id.toString())
+        // Mark user as active
+        try {
+            user.isActive = true;
+            await user.save();
+        } catch (e) {
+            console.log('Failed to set isActive on login:', e.message);
+        }
+
         res.json({success: true, token})
     } catch (error) {
         console.log(error.message);
         res.json({success: false, message: error.message})
+    }
+}
+
+// Logout User (mark inactive)
+export const logoutUser = async (req, res) => {
+    try {
+        const { _id } = req.user;
+        await User.findByIdAndUpdate(_id, { isActive: false });
+        res.json({ success: true, message: 'Logged out' });
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
     }
 }
 

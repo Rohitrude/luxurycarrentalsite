@@ -1,0 +1,14 @@
+Step 1: Create Razorpay Account
+Go to razorpay.com
+Sign up
+Go to Dashboard → Settings → API Keys
+Generate Test Key ID and Test Secret
+
+added this in .env file
+RAZORPAY_KEY_ID=rzp_test_xxxxx
+RAZORPAY_SECRET=xxxxxxxx
+
+Step 3: Install Razorpay in Backend (Node.js)
+In your backend folder:
+'npm install razorpay'
+

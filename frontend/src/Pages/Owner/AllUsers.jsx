@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { assets } from '../../assets/assets';
 
 const AllUsers = () => {
-    const { axios } = useAppContext();
+    const { axios, user: activeUser } = useAppContext();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -63,7 +63,7 @@ const AllUsers = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                     <p className="text-gray-600 text-sm">Total Users</p>
                     <p className="text-3xl font-bold text-blue-600">{users.length}</p>
@@ -77,6 +77,27 @@ const AllUsers = () => {
                 <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
                     <p className="text-gray-600 text-sm">Filtered Results</p>
                     <p className="text-3xl font-bold text-purple-600">{filteredUsers.length}</p>
+                </div>
+                <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <p className="text-gray-600 text-sm">Active User</p>
+                    {activeUser ? (
+                        <div className="flex items-center mt-2">
+                            <img
+                                src={activeUser.image || assets.user_profile}
+                                alt={activeUser.name}
+                                className="w-12 h-12 rounded-full object-cover mr-3"
+                            />
+                            <div>
+                                <p className="text-sm font-medium text-gray-800">{activeUser.name}</p>
+                                <p className="text-xs text-gray-600">{activeUser.email}</p>
+                                <p className={`text-xs font-semibold mt-1 ${activeUser.isActive ? 'text-green-700' : 'text-gray-700'}`}>
+                                    {activeUser.isActive ? 'Active' : 'Inactive'}
+                                </p>
+                            </div>
+                        </div>
+                    ) : (
+                        <p className="text-gray-500 mt-2">No active user</p>
+                    )}
                 </div>
             </div>
 
@@ -102,7 +123,7 @@ const AllUsers = () => {
                             {filteredUsers.map((user) => (
                                 <tr
                                     key={user._id}
-                                    className="border-b border-borderColor hover:bg-gray-50 transition-colors"
+                                    className={`border-b border-borderColor hover:bg-gray-50 transition-colors ${activeUser && user._id === activeUser._id ? 'bg-yellow-50' : ''}`}
                                 >
                                     <td className="px-4 py-3">
                                         <img
@@ -111,14 +132,19 @@ const AllUsers = () => {
                                             className="w-10 h-10 rounded-full object-cover"
                                         />
                                     </td>
-                                    <td className="px-4 py-3 text-sm text-gray-800 font-medium">{user.name}</td>
+                                    <td className="px-4 py-3 text-sm text-gray-800 font-medium">
+                                        {user.name}
+                                        {activeUser && user._id === activeUser._id && (
+                                            <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">You</span>
+                                        )}
+                                    </td>
                                     <td className="px-4 py-3 text-sm text-gray-600">{user.email}</td>
                                     <td className="px-4 py-3 text-sm text-gray-600">{user.phone || 'N/A'}</td>
                                     <td className="px-4 py-3">
                                         <span
                                             className={`px-3 py-1 rounded-full text-xs font-semibold ${user.isActive
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : 'bg-gray-100 text-gray-800'
+                                                ? 'bg-green-100 text-green-800'
+                                                : 'bg-gray-100 text-gray-800'
                                                 }`}
                                         >
                                             {user.isActive ? 'Active' : 'Inactive'}

@@ -1,13 +1,13 @@
-import { createContext, useContext, useEffect, useState}from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from 'axios';
-import {toast} from 'react-hot-toast';
-import {useNavigate} from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 export const AppContext = createContext();
 
-export const AppProvider = ({ children })=>{
+export const AppProvider = ({ children }) => {
 
     const navigate = useNavigate();
     const currency = import.meta.env.VITE_CURRENCY;
@@ -18,77 +18,85 @@ export const AppProvider = ({ children })=>{
     const [showLogin, setShowLogin] = useState(false);
     const [pickupDate, setPickupDate] = useState('');
     const [returnDate, setReturnDate] = useState('');
-    const [searchInput, setSearchInput] = useState(""); 
+    const [searchInput, setSearchInput] = useState("");
 
     const [cars, setCars] = useState([]);
 
     // Function to check if user is logged in
-    const fetchUser = async ()=>{
-        try{
-            const {data} = await axios.get('/api/user/data');
-            if(data.success){
+    const fetchUser = async () => {
+        try {
+            const { data } = await axios.get('/api/user/data');
+            if (data.success) {
                 setUser(data.user);
                 setIsOwner(data.user.role === 'owner');
             }
-            else{
+            else {
                 navigate('/')
             }
-        }catch(error){
+        } catch (error) {
             toast.error(error.message);
         }
     }
 
     // Function to fetch all cars from the server
-    const fetchCars = async ()=>{
-        try{
-            const {data} = await axios.get('/api/user/cars');
+    const fetchCars = async () => {
+        try {
+            const { data } = await axios.get('/api/user/cars');
             data.success ? setCars(data.cars) : toast.error(data.message)
-        }catch(error){
+        } catch (error) {
             toast.error(error.message);
         }
     }
 
     // Function to log out the user
-    const logout = ()=>{
-        localStorage.removeItem("token");
-        setToken(null);
-        setUser(null);
-        setIsOwner(false);
-        axios.defaults.headers.common['Authorization'] =  '';
-        toast.success("Logged out successfully");
+    const logout = () => {
+        (async () => {
+            try {
+                await axios.post('/api/user/logout');
+            } catch (e) {
+                // ignore errors but log for debugging
+                console.log('Logout API failed', e.message);
+            }
+            localStorage.removeItem("token");
+            setToken(null);
+            setUser(null);
+            setIsOwner(false);
+            axios.defaults.headers.common['Authorization'] = '';
+            toast.success("Logged out successfully");
+        })();
     }
 
     // useEffect to retrieve the token from localStorage
-    useEffect(()=>{
+    useEffect(() => {
         const token = localStorage.getItem("token");
         setToken(token);
         fetchCars();
-    },[])
+    }, [])
 
     // useEffect to fetch user data when token is available
-    useEffect(()=>{
-        if(token){
-            axios.defaults.headers.common['Authorization'] =  `${token}`;
+    useEffect(() => {
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `${token}`;
             fetchUser();
         }
-    },[token])
-  
+    }, [token])
+
     const value = {
-        navigate, currency, axios, user, setUser, token, 
-        setToken, isOwner, setIsOwner,showLogin, setShowLogin, pickupDate, 
+        navigate, currency, axios, user, setUser, token,
+        setToken, isOwner, setIsOwner, showLogin, setShowLogin, pickupDate,
         setPickupDate, returnDate, setReturnDate,
         cars, setCars, fetchCars, logout, fetchUser, searchInput, setSearchInput,
 
     }
 
     return (
-    <AppContext.Provider value={value}>
-        { children }
-    </AppContext.Provider>
+        <AppContext.Provider value={value}>
+            {children}
+        </AppContext.Provider>
     );
 }
 
 
-export const useAppContext  = ()=>{
+export const useAppContext = () => {
     return useContext(AppContext);
 }

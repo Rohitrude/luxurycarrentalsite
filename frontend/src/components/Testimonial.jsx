@@ -29,7 +29,7 @@ const Testimonial = () => {
   ];
 
   return (
-    <div className="py-28 px-6 md:px-16 lg:px-24 xl:px-32">
+    <div className="py-28 px-6 md:px-16 lg:px-24 xl:px-32 flex flex-col items-center justify-center text-center space-y-2 max-md:px-4 my-6 mb-8">
 
       <Title
         title="What Our Customers Say"
