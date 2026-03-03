@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-axios.defaults.baseURL = "https://luxurycarrentalsite-backend.onrender.com"c;
+axios.defaults.baseURL = "https://luxurycarrentalsite-backend.onrender.com";
 
 export const AppContext = createContext();
 
